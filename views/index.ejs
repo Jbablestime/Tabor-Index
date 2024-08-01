@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Noto Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <!-- Roboto Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/style.css" rel="stylesheet" type="text/css" />
+
+    <meta content="Tabor Index" property="og:title" />
+	<meta content="The best place to find useful tips and information on Ghosts of Tabor." property="og:description" />
+	<meta content="https:/jb.polardev.net" property="og:url" />
+	<meta content="#252525" data-react-helmet="true" name="theme-color" />
+	<meta content="" property="og:image" />
+    
+    <title>Tabor Index</title>
+</head>
+<body>
+    <div id="header" class="header">
+        <img class="avatar" src="<%= avatarURL %>" alt="User Avatar"/>
+        <p class="username">Hello <%= username %>!<p>
+        <button onclick="logout()" class="subbutton2">Logout</button>
+        <% if (userID === "750454372650975232" || "959591187151466537") { %>
+            <button onclick="admin()" class="subbutton2">Admin</button>
+        <% } %>
+    </div>
+    <div id="box" class="box">
+        <span class="tab"><button id="home">Home</button></span>
+        <span class="tab"><button id="kits">Kits</button></span>
+        <span class="tab"><button id="equipment">Equipment</button></span>
+        <span class="tab"><button id="attachments">Attachments</button></span>
+        <span class="tab"><button id="weaponry">Weaponry</button></span>
+        <span class="tab"><button id="consumables">Consumables</button></span>
+        <span class="tab"><button id="items">Items</button></span>
+
+        <hr id="divider" style="background-color: #252525; margin-top: 50px; text-align: center; width: 975px; height: 0.5px; border: none;">
+        <div class="tabcontent" id="tab-content"></div>
+    </div>
+    <div id="statbox" class="s-box">
+        <span class="tab"><button style="margin-top: 10px;">Wipe Timer</button></span>
+        <hr style="background-color: #252525; margin-top: 50px; text-align: center; width: 375px; height: 0.5px; border: none;">
+        
+        <h3 style="margin-top: 20px; margin-left: 12px;">Since 10:47AM, July 31st</h3>
+        <i style="color: gray; font-size: 15px; margin-left: 10px;">Confirmed by <span style="color: #f1c40f;">Combat Waffle Studios</span></i>
+    </div>
+    <div id="statbox2" class="s-box">
+        <span class="tab"><button style="margin-top: 10px; margin-bottom: 10px;">Player Count</button></span>
+        <hr style="background-color: #252525; text-align: center; width: 375px; height: 0.5px; border: none;">
+    
+        <h3 id="player-count" style="margin-top: 20px; margin-left: 12px;">0</h3>
+        <i style="color: gray; font-size: 15px; margin-left: 10px;">Updates every <span style="color: #00ff00;">1 minute, 30 seconds</span></i>
+    </div>
+
+<script src="/script.js"></script>
+<script src="https://kit.fontawesome.com/f314a8ff6f.js" crossorigin="anonymous"></script>
+</body>
+</html>
