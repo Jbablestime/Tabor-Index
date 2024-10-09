@@ -26,7 +26,7 @@ let tabContent = document.getElementById("tab-content");
 let playerCountLabel = document.getElementById("player-count");
 
 function fetchPlayerCount(){
-    fetch("http://localhost:3000/api").then(response => {
+    fetch("localhost/api").then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
@@ -35,7 +35,7 @@ function fetchPlayerCount(){
         playerCountLabel.innerText = data["player"]["playersOnline"]
         console.log("[TI] Player count updated.")
     }).catch(error => {
-        //console.error('There was a problem with the fetch operation:', error);
+        console.error('There was a problem with the fetch operation:', error);
     });
 }
 setInterval(fetchPlayerCount, 85000)
@@ -91,31 +91,300 @@ let kitsTabContent = `
         <button class="kit-button">Mid-Tier Kit</button>
         <button class="kit-button">High-Tier Kit</button>
     </center>`
-let equipmentTabContent = ``
-let attachmentsTabContent = ``
-let weaponryTabContent = `
-<button onclick="rifles()" class="subbutton" style="float: left; margin-right: 10px;" id="rifles">Assault Rifles</button>
-<button onclick="smgs()" class="subbutton" style="float: left; margin-right: 10px;" id="smgs">SMGS</button>
-<button onclick="pistols()" class="subbutton" style="float: left; margin-right: 10px;" id="pistols">Pistols</button>
-<button onclick="boltactionrifles()" class="subbutton" style="float: left; margin-right: 10px;" id="boltactionrifles">Bolt-Action Rifles</button>
-<button onclick="sniperrifles()" class="subbutton" style="float: left; margin-right: 10px;" id="sniperrifles">Sniper Rifles</button>
-<button onclick="shotguns()" class="subbutton" style="float: left; margin-right: 10px;" id="shotguns">Shotguns</button>
-<button onclick="lmgs()" class="subbutton" style="float: left; margin-right: 10px;" id="lmgs">LMGS</button>
-<button onclick="melee()" class="subbutton" style="float: left; margin-right: 10px;" id="melee">Melee</button>
-<button onclick="throwables()" class="subbutton" style="float: left; margin-right: 10px;" id="throwables">Throwables</button>
-<button onclick="uniqueweapons()" class="subbutton" style="float: left; margin-right: 10px;" id="uniqueweapons">Unique Weapons</button><br>
-<div style="display: block;" id="tab-content-weaponry"></div>
+let equipmentTabContent = `
+    <button onclick="helmets()" class="subbutton" style="float: left; margin-right: 10px;" id="helmets">Helmets</button>
+    <button onclick="nvgs()" class="subbutton" style="float: left; margin-right: 10px;" id="nvgs">NVGs & Masks</button>
+    <button onclick="chestrigs()" class="subbutton" style="float: left; margin-right: 10px;" id="chestrigs">Chest Rigs</button>
+    <button onclick="modules()" class="subbutton" style="float: left; margin-right: 10px;" id="pouches">Pouches</button>
+    <button onclick="backpacks()" class="subbutton" style="float: left; margin-right: 10px;" id="backpacks">Backpacks</button>
+    <button onclick="uniqueequipment()" class="subbutton" style="float: left; margin-right: 10px;" id="backpacks">Unique Equipment</button>
+    <div style="display: block;" id="tab-content-equipment"></div>
+`   
+let attachmentsTabContent = `
+    <button onclick="suppressors()" class="subbutton" style="float: left; margin-right: 10px;" id="suppressors">Suppressors</button>
+    <button onclick="rails()" class="subbutton" style="float: left; margin-right: 10px;" id="rails">Rails</button>
+    <button onclick="lasers()" class="subbutton" style="float: left; margin-right: 10px;" id="lasers">Lasers & Lights</button>
+    <button onclick="scopes()" class="subbutton" style="float: left; margin-right: 10px;" id="scopes">Scopes</button>
+    <button onclick="reflexsights()" class="subbutton" style="float: left; margin-right: 10px;" id="reflexsights">Reflex Sights</button>
+    <button onclick="foregrips()" class="subbutton" style="float: left; margin-right: 10px;" id="foregrips">Foregrips</button>
+    <button onclick="riflemag()" class="subbutton" style="float: left; margin-right: 10px;" id="riflemag">Rifle Magazines</button>
+    <button onclick="smgmag()" class="subbutton" style="float: left; margin-right: 10px;" id="smgmag">SMG Magazines</button>
+    <button onclick="pistolmag()" class="subbutton" style="float: left; margin-right: 10px;" id="pistolmag">Pistol Magazines</button>
+    <button onclick="boltmag()" class="subbutton" style="float: left; margin-right: 10px;" id="boltmag">Bolt-Action Magazines</button>
+    <button onclick="snipermag()" class="subbutton" style="float: left; margin-right: 10px;" id="snipermag">Sniper Magazines</button>
+    <button onclick="shotgunmag()" class="subbutton" style="float: left; margin-right: 10px;" id="shotgunmag">Shotgun Magazines</button>
+    <button onclick="lmgmag()" class="subbutton" style="float: left; margin-right: 10px;" id="lmgmag">LMG Magazines</button>
+    <div style="display: block;" id="tab-content-attachments"></div>
 `
-let consumablesTabContent = ``
-let itemsTabContent = ``
+let weaponryTabContent = `
+    <button onclick="rifles()" class="subbutton" style="float: left; margin-right: 10px;" id="rifles">Assault Rifles</button>
+    <button onclick="smgs()" class="subbutton" style="float: left; margin-right: 10px;" id="smgs">SMGS</button>
+    <button onclick="pistols()" class="subbutton" style="float: left; margin-right: 10px;" id="pistols">Pistols</button>
+    <button onclick="boltactionrifles()" class="subbutton" style="float: left; margin-right: 10px;" id="boltactionrifles">Bolt-Action Rifles</button>
+    <button onclick="sniperrifles()" class="subbutton" style="float: left; margin-right: 10px;" id="sniperrifles">Sniper Rifles</button>
+    <button onclick="shotguns()" class="subbutton" style="float: left; margin-right: 10px;" id="shotguns">Shotguns</button>
+    <button onclick="lmgs()" class="subbutton" style="float: left; margin-right: 10px;" id="lmgs">LMGS</button>
+    <button onclick="melee()" class="subbutton" style="float: left; margin-right: 10px;" id="melee">Melee</button>
+    <button onclick="throwables()" class="subbutton" style="float: left; margin-right: 10px;" id="throwables">Throwables</button>
+    <button onclick="uniqueweapons()" class="subbutton" style="float: left; margin-right: 10px;" id="uniqueweapons">Unique Weapons</button><br>
+    <div style="display: block;" id="tab-content-weaponry"></div>
+`
+let consumablesTabContent = `
+    <button onclick="food()" class="subbutton" style="float: left; margin-right: 10px;" id="rifles">Food</button>
+    <button onclick="drink()" class="subbutton" style="float: left; margin-right: 10px;" id="smgs">Drink</button>
+    <button onclick="healing()" class="subbutton" style="float: left; margin-right: 10px;" id="smgs">Healing</button>
+    <div style="display: block;" id="tab-content-consumables"></div>
+`
+let itemsTabContent = `
+    <button onclick="regular()" class="subbutton" style="float: left; margin-right: 10px;" id="regular">Regular</button>
+    <button onclick="static()" class="subbutton" style="float: left; margin-right: 10px;" id="static">Static</button>
+    <div style="display: block;" id="tab-content-items"></div>
+`
 
+// [CONSUMABLES SECTION]
+let foodContent = `<br><br>
+    <button class="item-button">Choco Bar</button>
+    <button class="item-button">Cat Food</button>
+    <button class="item-button">One Shot Stick</button>
+    <button class="item-button">Gulash Can</button>
+    <button class="item-button">Herring Fillets</button>
+    <button class="item-button">Muesli Bar</button>
+    <button class="item-button">Tangerines Can</button>
+    <button class="item-button">Noodles with Tomatoes Can</button>
+    <button class="item-button">Peach Can</button>
+    <button class="item-button">Fish Curry</button>
+    <button class="item-button">Anchovies Can</button>
+    <button class="item-button">Ravioli Can</button>
+    <button class="item-button">Beans Can</button>
+    <button class="item-button">Mixed Fruit Cocktail</button>
+`
+let drinkContent= `<br><br>
+    <button class="item-button">Water Bottle</button>
+    <button class="item-button">Thermos</button>
+    <button class="item-button">Cantine</button>
+    <button class="item-button">Glytch Skill Issue Drink</button>
+`
+let healingContent = `<br><br>
+    <button class="item-button">Bandage</button>
+    <button class="item-button">NRS</button>
+`
+// [ITEMS SECTION]
+let regitemsContent = `<br><br>
+    <button class="item-button">Camera Lens</button>
+    <button class="item-button">Capacitors</button>
+    <button class="item-button">CPU</button>
+    <button class="item-button">Electronic Wallet</button>
+    <button class="item-button">Fishing Rod</button>
+    <button class="item-button">GPU</button>
+    <button class="item-button">Hack Tool</button>
+    <button class="item-button">Journal</button>
+    <button class="item-button">Junk Gauge</button>
+    <button class="item-button">Junk Phone</button>
+    <button class="item-button">Junk RAM</button>
+    <button class="item-button">Junk Spark Plug</button>
+    <button class="item-button">Junk USB Charger</button>
+    <button class="item-button">Koruna Money Stack</button>
+    <button class="item-button">Nail Pile</button>
+    <button class="item-button">Nuts and Bolts</button>
+    <button class="item-button">PC Fan</button>
+    <button class="item-button">Power Bank</button>
+    <button class="item-button">Power Supply</button>
+    <button class="item-button">Rope</button>
+    <button class="item-button">Scrap Metal</button>
+    <button class="item-button">SSD</button>
+    <button class="item-button">Tackle Box</button>
+    <button class="item-button">Tape Measure</button>
+    <button class="item-button">Toilet Paper</button>
+    <button class="item-button">USB Stick</button>
+    <button class="item-button">Walkie Talkie</button>
+    <button class="item-button">Water Filter</button>
+    <button class="item-button">Wire Spool</button>
+`
+
+let statitemsContent = `<br><br>
+    <button class="item-button">Car Battery</button>
+    <button class="item-button">Flight Recorder</button>
+    <button class="item-button">Gas Can</button>
+    <button class="item-button">Mahina</button>
+    <button class="item-button">Yorick's Skull</button>
+    <button class="item-button">Viper's Sauce</button>
+    <button class="item-button">Twiejk Cheese</button>
+    <button class="item-button">Ranger Handbook</button>
+    <button class="item-button">TimelessVR Pocket Watch</button>
+    <button class="item-button">RageSaq Saber</button>
+`
+
+// [ATTACHMENTS SECTION]
+let suppressorsContent = `<br><br><br>
+    <button style="font-size: 12px;" class="item-button">Ghost M Pistol Suppressor</button>
+    <button class="item-button">Nomad Assault Rifle Suppressor</button>
+    <button class="item-button">Sandman K-Bolt Action Suppressor</button>
+    <button class="item-button">Sierra LMG Suppressor</button>
+    <button class="item-button">Wolfman 5 SMG Suppressor</button>
+    <button class="item-button">Wolverine C Assualt Rifle Suppressor</button>
+    <button class="item-button">Osprey Pistol Suppressor</button>
+    <button class="item-button">Salvo Shotgun Suppressor</button>
+    <button class="item-button">Barrett Suppressor</button>
+`
+let railsContent = `<br><br><br>
+    <button class="item-button">AK Side Rail</button>
+    <button class="item-button">Canted Right Rail</button>
+`
+let lasersContent = `<br><br><br>
+    <button class="item-button">LS321G</button>
+    <button class="item-button">M952v</button>
+`
+let scopesContent = `<br><br><br>
+    <button class="item-button">ACOG</button>
+    <button class="item-button">Smith</button>
+    <button class="item-button">NightForce</button>
+`   
+let reflexsightsContent = `<br><br><br>
+    <button class="item-button">EO-Tech 2X-4X Magnifier</button>
+    <button class="item-button">EXPS3</button>
+    <button class="item-button">EO-Tech Flex Mini</button>
+    <button class="item-button">RMR Sight</button>
+    <button class="item-button">PK-06</button>
+    <button class="item-button">Kobra</button>
+    <button class="item-button">OKP-7</button>
+`
+let foregripsContent = `<br><br><br>
+    <button class="item-button">Combat</button>
+    <button class="item-button">Fortis Shift</button>
+    <button class="item-button">FSG</button>
+    <button class="item-button">Halo Mini</button>
+    <button class="item-button">KRISS</button>
+    <button class="item-button">Zenit RK Angled</button>
+    <button class="item-button">Zenit RK-6</button>
+`
+let riflemagContent = `<br><br><br>
+    <button class="item-button">AK74 Magazine 30rnd</button>
+    <button class="item-button">AK5C Magazine 30rnd</button>
+    <button class="item-button">AKM Magazine 30rnd</button>
+    <button class="item-button">AKM Drum 75rnd</button>
+    <button class="item-button">Aug Magazine 30rnd</button>
+    <button class="item-button">ASVAL Magazine 20rnd</button>
+    <button class="item-button">G3A3 Magazine 20rnd</button>
+    <button class="item-button">G3A3 Magazine 30rnd</button>
+    <button class="item-button">G36K Magazine 30rnd</button>
+    <button class="item-button">G36K Magazine 45rnd</button>
+    <button class="item-button">M1A SASS Magazine 20rnd</button>
+    <button class="item-button">M1A SASS Drum 50rnd</button>
+    <button class="item-button">SCAR-L Magazine 20rnd</button>
+    <button class="item-button">SG552 Magazine 30rnd</button>
+    <button class="item-button">SKS Magazine 30rnd</button>
+    <button class="item-button">SKS Drum 75rnd</button>
+    <button class="item-button">STANAG Magazine 30rnd</button>
+    <button class="item-button">STANAG Drum 60rnd</button>
+    <button class="item-button">Stoner63 Drum 150rnd</button>
+    <button class="item-button">VSS Magazine 10rnd</button>
+    <button class="item-button">VSS Magazine 30rnd</button>
+`
+let smgmagContent = `<br><br><br>
+    <button class="item-button">Agram Magazine 30rnd</button>
+    <button class="item-button">Bizon Magazine 64rnd</button>
+    <button class="item-button">CX8 Magazine 30rnd</button>
+    <button class="item-button">Luty Magazine 16rnd</button>
+    <button class="item-button">Mac 10 Magazine 30rnd</button>
+    <button class="item-button">MAT-49 Magazine 32rnd</button>
+    <button class="item-button">MP5 Magazine 30rnd</button>
+    <button class="item-button">MP7 Magazine 40rnd</button>
+    <button class="item-button">MP7 Drum 75rnd</button>
+    <button class="item-button">MP9 Magazine 30rnd</button>
+    <button class="item-button">MP40 Magazine 32rnd</button>
+    <button class="item-button">P90 Magazine 50rnd</button>
+    <button class="item-button">PPSH Drum 71rnd</button>
+    <button class="item-button">Thompson Magazine 30rnd</button>
+    <button class="item-button">Thompson Drum 100rnd</button>
+    <button class="item-button">UMP Magazine 25rnd></button>
+    <button class="item-button">Vector 9mm Magazine 30rnd</button>
+    <button class="item-button">Vector 9mm Drum 50rnd</button>
+    <button class="item-button">Vector 10mm Magazine 30rnd</button>
+    <button class="item-button">Vector 10mm Drum 50rnd</button>
+`
+let pistolmagContent = `<br><br><br>
+    <button class="item-button">C1911 Magazine 8rnd</button>
+    <button class="item-button">Desert Eagle Magazine 7rnd</button>
+    <button class="item-button">FN-57 Magazine 20rnd</button>
+    <button class="item-button">FN-57 Magazine 30rnd</button>
+    <button class="item-button">Glock17 Magazine 17rnd</button>
+    <button class="item-button">Makarov Magazine 9rnd</button>
+    <button class="item-button">Ruger Magazine ??rnd</button>
+    <button class="item-button">Tokarev Magazine 8rnd</button>
+    <button class="item-button">USP Magazine 12rnd</button>
+`
+let boltmagContent = `<br><br><br>
+    <button class="item-button">AWM Magazine 5rnd</button>
+    <button class="item-button">Tikka T3 Magazine 4rnd</button>
+`
+let snipermagContent = `<br><br><br>
+    <button class="item-button">Barrett Magazine 5rnd</button>
+    <button class="item-button">Dragunov Magazine 10rnd</button>
+    <button class="item-button">Dragunov Magazine 15rnd</button>
+`
+let shotgunmagContent = `<br><br><br>
+    <button class="item-button">Saiga Magazine 5rnd</button>
+    <button class="item-button">Saige Drum 20rnd</button>
+`
+let lmgmagContent = `<br><br><br>
+    <button class="item-button">BAR Magazine 20rnd</button>
+`
+
+// [EQUIPMENT SECTION]
+let helmetsContent = `<br><br>
+    <button class="item-button">SPH-5</button>
+    <button class="item-button">SSH-68</button>
+    <button class="item-button">6B47</button>
+    <button class="item-button">ATE</button>
+    <button class="item-button">C1300</button>
+    <button class="item-button">Devtac Ronin</button>
+    <button class="item-button">ALTYN</button>
+    <button class="item-button">Helmet Mich</button>
+    <button class="item-button">KRTEK Mask</button>
+    <button class="item-button">Fish Cultist Mask</button>
+`
+let nvgsContent = `<br><br>
+    <button class="item-button">PVS7</button>
+    <button class="item-button">NVG21</button>
+    <button class="item-button">GPNVG18</button>
+    <button class="item-button">ALTYN Face Mask</button>
+`
+let chestrigsContent = `<br><br>
+    <button class="item-button">A22</button>
+    <button class="item-button">LBAV</button>
+    <button class="item-button">JPC2</button>
+    <button class="item-button">VestB</button>
+    <button class="item-button">6B102</button>
+    <button class="item-button">6B43</button>
+    <button class="item-button">R61</button>
+`
+let modulesContent = `<br><br>
+    <button style="font-size: 13px;" class="item-button">Primary Ammo Module</button>
+    <button style="font-size: 13px;" class="item-button">Secondary Ammo Module</button>
+    <button class="item-button">Utility Module</button>
+    <button class="item-button">Knife Module</button>
+    <button class="item-button">Ammo Pouch</button>
+`
+let backpacksContent = `<br><br>
+    <button class="item-button">Sling Backpack</button>
+    <button class="item-button">Adventure Backpack</button>
+    <button class="item-button">Gear Tech G4</button>
+    <button class="item-button">Ragnar Backpack</button>
+`
+let uniqueEquipmentContent = `<br><br>
+    <button class="item-button">UWU ALTYN</button>
+    <button class="item-button">UWU ALTYN Face Mask</button>
+    <button class="item-button">UWU Backpack</button>
+`
+
+// [WEAPONRY SECTION]
 let riflesContent = `<br>
     <button id="ak109alpha" class="item-button">AK-109 Alpha</button>
     <button class="item-button">AK5C</button>
     <button class="item-button">AK-74</button>
     <button class="item-button">AKM</button>
     <button class="item-button">AKS74-U</button>
-    <button class="item-button">AS VAL</button>
+    <button class="item-button">ASVAL</button>
     <button class="item-button">Aug A1</button>
     <button class="item-button">Famas-G2</button>
     <button class="item-button">HK G36K</button>
@@ -228,6 +497,117 @@ let uniqueweaponsContent = `<br>
     <button style="font-size: 15px;" class="item-button2">Tokarev "Gold" TT-33</button>
     
     `
+
+function regular(){
+    let tabContentItems = document.getElementById("tab-content-items");
+    tabContentItems.innerHTML = regitemsContent
+}
+
+function static(){
+    let tabContentItems = document.getElementById("tab-content-items");
+    tabContentItems.innerHTML = statitemsContent
+}
+
+function food(){
+    let tabContentConsumables = document.getElementById("tab-content-consumables");
+    tabContentConsumables.innerHTML = foodContent
+}
+function drink(){
+    let tabContentConsumables = document.getElementById("tab-content-consumables");
+    tabContentConsumables.innerHTML = drinkContent
+}
+function healing(){
+    let tabContentConsumables = document.getElementById("tab-content-consumables");
+    tabContentConsumables.innerHTML = healingContent
+}
+
+function suppressors(){
+    let tabContentEquipment = document.getElementById("tab-content-attachments");
+    tabContentEquipment.innerHTML = suppressorsContent
+};
+
+function rails(){
+    let tabContentEquipment = document.getElementById("tab-content-attachments");
+    tabContentEquipment.innerHTML = railsContent
+};
+
+function lasers(){
+    let tabContentEquipment = document.getElementById("tab-content-attachments");
+    tabContentEquipment.innerHTML = lasersContent
+};
+function scopes(){
+    let tabContentEquipment = document.getElementById("tab-content-attachments");
+    tabContentEquipment.innerHTML = scopesContent
+};
+function reflexsights(){
+    let tabContentEquipment = document.getElementById("tab-content-attachments");
+    tabContentEquipment.innerHTML = reflexsightsContent
+};
+function foregrips(){
+    let tabContentEquipment = document.getElementById("tab-content-attachments");
+    tabContentEquipment.innerHTML = foregripsContent
+};
+function riflemag(){
+    let tabContentEquipment = document.getElementById("tab-content-attachments");
+    tabContentEquipment.innerHTML = riflemagContent
+};
+function smgmag(){
+    let tabContentEquipment = document.getElementById("tab-content-attachments");
+    tabContentEquipment.innerHTML = smgmagContent
+};
+function pistolmag(){
+    let tabContentEquipment = document.getElementById("tab-content-attachments");
+    tabContentEquipment.innerHTML = pistolmagContent
+};
+function boltmag(){
+    let tabContentEquipment = document.getElementById("tab-content-attachments");
+    tabContentEquipment.innerHTML = boltmagContent
+};
+function snipermag(){
+    let tabContentEquipment = document.getElementById("tab-content-attachments");
+    tabContentEquipment.innerHTML = snipermagContent
+};
+function shotgunmag(){
+    let tabContentEquipment = document.getElementById("tab-content-attachments");
+    tabContentEquipment.innerHTML = shotgunmagContent
+};
+function lmgmag(){
+    let tabContentEquipment = document.getElementById("tab-content-attachments");
+    tabContentEquipment.innerHTML = lmgmagContent
+};
+
+
+function helmets(){
+    let tabContentEquipment = document.getElementById("tab-content-equipment");
+    tabContentEquipment.innerHTML = helmetsContent
+};
+
+function nvgs(){
+    let tabContentEquipment = document.getElementById("tab-content-equipment");
+    tabContentEquipment.innerHTML = nvgsContent
+};
+
+function chestrigs(){
+    let tabContentEquipment = document.getElementById("tab-content-equipment");
+    tabContentEquipment.innerHTML = chestrigsContent
+};
+
+function modules(){
+    let tabContentEquipment = document.getElementById("tab-content-equipment");
+    tabContentEquipment.innerHTML = modulesContent
+};
+
+function backpacks(){
+    let tabContentEquipment = document.getElementById("tab-content-equipment");
+    tabContentEquipment.innerHTML = backpacksContent
+};
+
+function uniqueequipment(){
+    let tabContentEquipment = document.getElementById("tab-content-equipment");
+    tabContentEquipment.innerHTML = uniqueEquipmentContent
+}
+
+
 
 function rifles(){
     let tabContentWeaponry = document.getElementById("tab-content-weaponry");
